@@ -6,14 +6,16 @@
     <persistence-unit name="myUnit" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/PostgresDS</jta-data-source>
-        <class>models.Product</class>
-        <class>models.OrderContent</class>
-        <class>models.Order</class>
+        <class>model.Product</class>
+        <class>model.OrderContent</class>
+        <class>model.Order</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <property name="hibernate.connection.useUnicode" value="true"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
         </properties>
     </persistence-unit>
 </persistence>

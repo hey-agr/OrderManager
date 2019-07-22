@@ -1,9 +1,8 @@
-package models;
-
-import org.hibernate.annotations.Type;
+package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -14,7 +13,7 @@ public class Product implements Serializable {
     private int id;
 
     private String name;
-    private Integer price;
+    private BigDecimal price;
 
     public Product() {
     }
@@ -27,11 +26,19 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

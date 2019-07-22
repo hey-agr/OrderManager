@@ -1,33 +1,46 @@
-package models;
+package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "ORDERS")
 @Table(name = "orders")
+@NamedQueries({
+        @NamedQuery(name="allOrders", query="SELECT o FROM ORDERS o")
+})
 public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private Integer number;
 
+    @Column(name="ordertime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date orderTime;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @PrePersist
+    protected void onCreate() {
+        orderTime = new Date();
+    }
+
+    @Column(name="customeremail", length=255, nullable=false)
+    private String customerEmail;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderContent> orderContents;
 
     public Order() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,6 +68,14 @@ public class Order implements Serializable {
         this.orderTime = orderTime;
     }
 
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +85,8 @@ public class Order implements Serializable {
 
         if (id != order.id) return false;
         if (number != null ? !number.equals(order.number) : order.number != null) return false;
-        return orderTime != null ? orderTime.equals(order.orderTime) : order.orderTime == null;
+        if (orderTime != null ? !orderTime.equals(order.orderTime) : order.orderTime != null) return false;
+        return customerEmail != null ? customerEmail.equals(order.customerEmail) : order.customerEmail == null;
     }
 
     @Override
@@ -72,6 +94,7 @@ public class Order implements Serializable {
         int result = id;
         result = 31 * result + (number != null ? number.hashCode() : 0);
         result = 31 * result + (orderTime != null ? orderTime.hashCode() : 0);
+        result = 31 * result + (customerEmail != null ? customerEmail.hashCode() : 0);
         return result;
     }
 }

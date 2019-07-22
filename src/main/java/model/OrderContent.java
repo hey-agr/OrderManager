@@ -1,9 +1,11 @@
-package models;
+package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
+@Table(name = "ordercontent")
 public class OrderContent implements Serializable {
 
     @Id
@@ -14,11 +16,11 @@ public class OrderContent implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private Integer price;
+    private BigDecimal price;
 
     private Integer count;
 
-    private Integer sum;
+    private BigDecimal sum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -43,14 +45,6 @@ public class OrderContent implements Serializable {
         this.product = product;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     public Integer getCount() {
         return count;
     }
@@ -59,20 +53,28 @@ public class OrderContent implements Serializable {
         this.count = count;
     }
 
-    public Integer getSum() {
-        return sum;
-    }
-
-    public void setSum(Integer sum) {
-        this.sum = sum;
-    }
-
     public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getSum() {
+        return sum;
+    }
+
+    public void setSum(BigDecimal sum) {
+        this.sum = sum;
     }
 
     @Override
@@ -86,7 +88,8 @@ public class OrderContent implements Serializable {
         if (product != null ? !product.equals(that.product) : that.product != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
         if (count != null ? !count.equals(that.count) : that.count != null) return false;
-        return sum != null ? sum.equals(that.sum) : that.sum == null;
+        if (sum != null ? !sum.equals(that.sum) : that.sum != null) return false;
+        return order != null ? order.equals(that.order) : that.order == null;
     }
 
     @Override
@@ -96,6 +99,7 @@ public class OrderContent implements Serializable {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (count != null ? count.hashCode() : 0);
         result = 31 * result + (sum != null ? sum.hashCode() : 0);
+        result = 31 * result + (order != null ? order.hashCode() : 0);
         return result;
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xml:lang="en" lang="en">
+<h:head>
+    <title>Title</title>
+</h:head>
+<h:body>
+<rich:panel>
+    <h3>List of orders:</h3>
+    <br/>
+    <a href="#{orderController.addNewOrder()}">Add order</a>
+    <br/>
+    <h:form rendered="#{not empty orderController.listOrders()}">
+        <rich:extendedDataTable value="#{orderController.listOrders()}" id="table" var="item" filterVar="filterVal">
+
+            <rich:column><f:facet name="header">Id</f:facet>#{item.id}</rich:column>
+
+            <rich:column><f:facet name="header">Order №</f:facet>#{item.number}</rich:column>
+
+            <rich:column><f:facet name="header">Customer EMail</f:facet>#{item.customerEmail}</rich:column>
+
+            <rich:column><f:facet name="header">Order time</f:facet>#{item.orderTime}</rich:column>
+
+            <rich:column width="70px">
+                <f:facet name="header">Actions</f:facet>
+                <h:commandButton value="edit" action="#{orderController.editCurrentOrder(item)}" />
+                <h:commandButton value="del" action="#{orderController.removeOrder(item.id)}" />
+            </rich:column>
+
+        </rich:extendedDataTable>
+    </h:form>
+
+</rich:panel>
+</h:body>
+</html>

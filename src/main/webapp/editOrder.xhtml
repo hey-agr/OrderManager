@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<h:head>
+    <title>Order detailed</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Order №" />
+            <h:inputText value="#{orderController.editOrder.number}" />
+            <!--<p:outputLabel value="Customer (email)" />
+            <p:inputText value="#{orderController.editOrder.customerEmail}" /> -->
+
+            <p>Email:
+                <h:inputText id="email" value="#{orderController.editOrder.customerEmail}" required="true" label="Email" validatorMessage="Email is not valid">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </h:inputText>
+                <rich:message for="email" />
+            </p>
+
+
+        </h:panelGrid>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:commandButton value="Save"
+                             action="#{orderController.saveOrder}" />
+            <h:commandButton value="Cancel"
+                             action="index.xhtml?faces-redirect=true"/>
+        </h:panelGrid>
+
+        <rich:tooltip value="Please Enter Email " target="email"/>
+    </h:form>
+</h:body>
+</html>
