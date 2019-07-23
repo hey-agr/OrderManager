@@ -1,6 +1,6 @@
 package service;
 
-import dao.OrderDao;
+import dao.OrderDAO;
 import model.Order;
 
 import javax.ejb.EJB;
@@ -12,9 +12,9 @@ import java.util.List;
 @Stateless
 public class OrderServiceImpl implements OrderService {
     @EJB
-    private OrderDao orderDao;
+    private OrderDAO orderDao;
 
-    public void setOrderDao(OrderDao orderDao) {
+    public void setOrderDao(OrderDAO orderDao) {
         this.orderDao = orderDao;
     }
 

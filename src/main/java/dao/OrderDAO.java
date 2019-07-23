@@ -4,7 +4,7 @@ import model.Order;
 
 import java.util.List;
 
-public interface OrderDao {
+public interface OrderDAO {
     void addOrder(Order order);
     void updateOrder(Order order);
     void removeOrder(Integer id);

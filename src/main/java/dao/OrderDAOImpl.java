@@ -5,10 +5,11 @@ import model.Order;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
-public class OrderDaoImpl implements OrderDao {
+public class OrderDAOImpl implements OrderDAO {
 
     @PersistenceContext(name = "myUnit")
     private EntityManager em;
@@ -35,9 +36,8 @@ public class OrderDaoImpl implements OrderDao {
         return order;
     }
 
-    @SuppressWarnings("unchecked")
     public List<Order> listOrders() {
-        List<Order> orderList = em.createQuery("SELECT o FROM ORDERS o").getResultList();
-        return orderList;
+        TypedQuery<Order> result = em.createNamedQuery("allOrders", Order.class);
+        return result.getResultList();
     }
 }

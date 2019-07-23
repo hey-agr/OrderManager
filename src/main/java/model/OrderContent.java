@@ -4,8 +4,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
+
+@Entity(name = "ORDERSCONTENT")
 @Table(name = "ordercontent")
+@NamedQueries({
+        @NamedQuery(name="allOrdersContent", query="SELECT content FROM ORDERSCONTENT content"),
+        @NamedQuery(name="allOrdersContentByOrder", query="SELECT content FROM ORDERSCONTENT content WHERE content.order = :order")})
 public class OrderContent implements Serializable {
 
     @Id

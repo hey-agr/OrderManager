@@ -14,8 +14,6 @@
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Order №" />
             <h:inputText value="#{orderController.editOrder.number}" />
-            <!--<p:outputLabel value="Customer (email)" />
-            <p:inputText value="#{orderController.editOrder.customerEmail}" /> -->
 
             <p>Email:
                 <h:inputText id="email" value="#{orderController.editOrder.customerEmail}" required="true" label="Email" validatorMessage="Email is not valid">
@@ -24,8 +22,17 @@
                 <rich:message for="email" />
             </p>
 
-
         </h:panelGrid>
+
+    <h:form rendered="#{not empty orderController.editOrder}">
+        <rich:extendedDataTable value="#{orderContentController.listOrderContentByOrder(orderController.editOrder)}" id="table" var="item" filterVar="filterVal">
+            <rich:column><f:facet name="header">ID</f:facet>#{item.id}</rich:column>
+            <rich:column><f:facet name="header">Product</f:facet>#{item.product}</rich:column>
+            <rich:column><f:facet name="header">Price</f:facet>#{item.price}</rich:column>
+            <rich:column><f:facet name="header">Count</f:facet>#{item.count}</rich:column>
+            <rich:column><f:facet name="header">Summ</f:facet>#{item.sum}</rich:column>
+        </rich:extendedDataTable>
+    </h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:commandButton value="Save"
                              action="#{orderController.saveOrder}" />
