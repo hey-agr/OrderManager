@@ -15,10 +15,12 @@
 <h:body>
 <rich:panel>
     <h3>List of orders:</h3>
-    <br/>
+    <!--<br/>
     <a href="#{orderController.addNewOrder()}">Add order</a>
-    <br/>
-    <h:form rendered="#{not empty orderController.listOrders()}">
+    <br/> -->
+
+    <h:form>
+        <h:commandButton value="Add new order" action="#{orderController.addNewOrder()}" style="margin-right : 8px" />
         <rich:extendedDataTable value="#{orderController.listOrders()}" id="table" var="item" filterVar="filterVal">
 
             <rich:column><f:facet name="header">Id</f:facet>#{item.id}</rich:column>

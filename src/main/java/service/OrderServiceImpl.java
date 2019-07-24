@@ -18,17 +18,14 @@ public class OrderServiceImpl implements OrderService {
         this.orderDao = orderDao;
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addOrder(Order order) {
         orderDao.addOrder(order);
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void updateOrder(Order order) {
         orderDao.updateOrder(order);
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeOrder(Integer id) {
         orderDao.removeOrder(id);
     }

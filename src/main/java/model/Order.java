@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +28,11 @@ public class Order implements Serializable {
         orderTime = new Date();
     }
 
-    @Column(name="customeremail", length=255, nullable=false)
+    @Column(name="customeremail", length=255)
     private String customerEmail;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderContent> orderContents;
+    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<OrderContent> orderContents = new ArrayList<OrderContent>();
 
     public Order() {
     }

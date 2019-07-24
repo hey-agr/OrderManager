@@ -16,6 +16,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     public void addOrder(Order order) {
         em.persist(order);
+        em.flush();
     }
 
     public void updateOrder(Order order) {
