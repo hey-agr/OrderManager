@@ -7,12 +7,11 @@ import service.OrderContentService;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class OrderContentController implements Serializable {
 
     @EJB

@@ -1,27 +1,22 @@
 package controller;
 
 import model.Order;
-import model.OrderContent;
 import service.OrderService;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@Named
-@RequestScoped
+@ManagedBean
+@SessionScoped
 public class OrderController implements Serializable {
 
     private Order editOrder;
     private boolean newOrder = false;
 
-    @Inject
+    @EJB
     private OrderService orderService;
 
     public void setOrderService(OrderService orderService) {
