@@ -3,38 +3,53 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:rich="http://richfaces.org/rich">
-
 <h:head>
     <title>Order detailed</title>
 </h:head>
 <h:body>
-    <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Order №" />
-            <h:inputText value="#{orderController.editOrder.number}" />
+    <f:metadata>
+        <f:viewParam name="orderId" value="#{orderController.orderId}"/>
+        <f:event type="preRenderView" listener="#{applicationController.preRenderViewOrderEvent()}"/>
+    </f:metadata>
 
+    <h:form id="formOrder">
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="Order №: " />
+            <h:inputText value="#{orderController.order.number}" />
+            <h:outputLabel value="E-Mail: " />
+            <h:inputText value="#{orderController.order.customerEmail}" />
+            <h:outputLabel value="Creation time: "/>
+            <h:outputLabel value= "#{orderController.order.orderTime}" />
+            <!--
             <p>Email:
-                <h:inputText id="email" value="#{orderController.editOrder.customerEmail}" label="Email" validatorMessage="Email is not valid">
+                <h:inputText id="email" value="#{orderForm.order.customerEmail}" label="Email" validatorMessage="Email is not valid">
                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                 </h:inputText>
                 <rich:message for="email" />
             </p>
-
+            -->
         </h:panelGrid>
 
-        <rich:extendedDataTable value="#{orderContentController.listOrderContentByOrder(orderController.editOrder)}" id="table" var="item" filterVar="filterVal">
-            <rich:column><f:facet name="header">ID</f:facet>#{item.id}</rich:column>
-            <rich:column><f:facet name="header">Product</f:facet>#{item.product}</rich:column>
-            <rich:column><f:facet name="header">Price</f:facet>#{item.price}</rich:column>
-            <rich:column><f:facet name="header">Count</f:facet>#{item.count}</rich:column>
-            <rich:column><f:facet name="header">Summ</f:facet>#{item.sum}</rich:column>
+
+        <h:commandButton value="Add order content" action="#{orderContentController.addNewOrderContent()}" style="margin-right : 8px" />
+        <rich:extendedDataTable value="#{orderContentController.getCurrentOrderContent()}" id="table" var="item" filterVar="filterVal">
+            <!-- <rich:column width="150px"><f:facet name="header">Order content ID</f:facet>#{item.id}</rich:column> -->
+            <rich:column width="150px"><f:facet name="header">Product</f:facet>#{item.product.getName()}</rich:column>
+            <rich:column width="150px"><f:facet name="header">Count</f:facet>#{item.count}</rich:column>
+            <rich:column width="150px"><f:facet name="header">Price</f:facet>#{item.price}</rich:column>
+            <rich:column width="150px"><f:facet name="header">Sum</f:facet>#{item.sum}</rich:column>
+            <rich:column width="53px">
+                <f:facet name="header">Actions</f:facet>
+                <h:commandButton value="delete" action="#{orderContentController.removeOrderContent(item)}" />
+            </rich:column>
         </rich:extendedDataTable>
 
         <h:panelGrid columns="2" cellpadding="5">
             <h:commandButton value="Save"
-                             action="#{orderController.saveOrder}" />
+                             action="#{applicationController.saveData()}" />
             <h:commandButton value="Cancel"
-                             action="#{orderController.cancel}"/>
+                             action="#{applicationController.cancelDataEdit()}"/>
         </h:panelGrid>
     </h:form>
 

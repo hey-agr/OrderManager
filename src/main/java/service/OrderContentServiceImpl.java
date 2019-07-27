@@ -5,19 +5,18 @@ import dao.OrderDAO;
 import model.Order;
 import model.OrderContent;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class OrderContentServiceImpl implements OrderContentService {
+public class OrderContentServiceImpl implements OrderContentService, Serializable {
 
-    @EJB
+    @Inject
     private OrderContentDAO orderContentDAO;
 
-    public void addOrderСontent(OrderContent orderContent) {
+    public void addOrderContent(OrderContent orderContent) {
         orderContentDAO.addOrderСontent(orderContent);
     }
 
@@ -33,11 +32,11 @@ public class OrderContentServiceImpl implements OrderContentService {
         return orderContentDAO.getOrderContentById(id);
     }
 
-    public List<OrderContent> listOrdersContents() {
-        return orderContentDAO.listOrdersContents();
+    public List<OrderContent> getOrdersContent() {
+        return orderContentDAO.getOrdersContent();
     }
 
-    public List<OrderContent> listOrdersContentByOrder(Order order) {
-        return orderContentDAO.listOrdersContentByOrder(order);
+    public List<OrderContent> getOrdersContentByOrder(Order order) {
+        return orderContentDAO.getOrdersContentByOrder(order);
     }
 }

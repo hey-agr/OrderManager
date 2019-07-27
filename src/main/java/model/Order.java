@@ -31,7 +31,7 @@ public class Order implements Serializable {
     @Column(name="customeremail", length=255)
     private String customerEmail;
 
-    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderContent> orderContents = new ArrayList<OrderContent>();
 
     public Order() {
@@ -77,6 +77,10 @@ public class Order implements Serializable {
         this.customerEmail = customerEmail;
     }
 
+//    public void addOrderContent(OrderContent orderContent) {
+//        this.orderContents.add(orderContent);
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,18 +88,11 @@ public class Order implements Serializable {
 
         Order order = (Order) o;
 
-        if (id != order.id) return false;
-        if (number != null ? !number.equals(order.number) : order.number != null) return false;
-        if (orderTime != null ? !orderTime.equals(order.orderTime) : order.orderTime != null) return false;
-        return customerEmail != null ? customerEmail.equals(order.customerEmail) : order.customerEmail == null;
+        return id != null ? id.equals(order.id) : order.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (orderTime != null ? orderTime.hashCode() : 0);
-        result = 31 * result + (customerEmail != null ? customerEmail.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 }

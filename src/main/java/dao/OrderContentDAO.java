@@ -10,6 +10,6 @@ public interface OrderContentDAO {
     void updateOrderContent(OrderContent orderContent);
     void removeOrderContent(Integer id);
     OrderContent getOrderContentById(Integer id);
-    List<OrderContent> listOrdersContents();
-    List<OrderContent> listOrdersContentByOrder(Order order);
+    List<OrderContent> getOrdersContent();
+    List<OrderContent> getOrdersContentByOrder(Order order);
 }

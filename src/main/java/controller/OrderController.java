@@ -3,82 +3,96 @@ package controller;
 import model.Order;
 import service.OrderService;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean
-@SessionScoped
-public class OrderController implements Serializable {
+@ConversationScoped
+@Named
+public class OrderController implements Serializable{
 
-    private Order editOrder;
-    private boolean newOrder = false;
+    @Inject
+    private Conversation conversation;
 
-    @EJB
+    @Inject
     private OrderService orderService;
 
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
+    private List<Order> orders;
+
+    private Order order;
+    private Integer orderId;
+
+    public void beginConversation() {
+        conversation.begin();
     }
 
-    public OrderService getOrderService() {
-        return orderService;
+    public void endConversation() {
+        conversation.end();
     }
 
-    public Order getEditOrder() {
-        return editOrder;
+    public boolean isTransientConversation() {
+        return conversation.isTransient();
     }
 
-    public void setEditOrder(Order editOrder) {
-        this.editOrder = editOrder;
+    public List<Order> getOrders() {
+        if (orders == null) {
+            refreshOrders();
+        }
+        return orders;
     }
 
-    public List<Order> listOrders() {
-        return orderService.listOrders();
+    public Order getOrder() {
+        if (order == null) {
+            initializeOrder();
+        }
+        return order;
     }
 
-    public void removeOrder(Integer id) {
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(final Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String addNewOrder() {
+        return "editOrder.xhtml?faces-redirect=true";
+    }
+
+    public void removeCurrentOrder(Integer id) {
         orderService.removeOrder(id);
+        refreshOrders();
     }
 
-    public void updateOrder(Order order) {
-        orderService.updateOrder(order);
+    public void refreshOrders() {
+        orders = orderService.getListOfOrders();
     }
 
-    public void addOrder(Order order) {
-        orderService.addOrder(order);
-    }
-
-    public boolean isNewOrder() {
-        return newOrder;
+    public String editCurrentOrder() {
+        return "editOrder.xhtml?faces-redirect=true";
     }
 
     public String saveOrder() {
-        if (newOrder) {
-            addOrder(editOrder);
+        if (orderId == null) {
+            orderService.addOrder(order);
         } else {
-            updateOrder(editOrder);
+            orderService.updateOrder(order);
         }
         return "index.xhtml?faces-redirect=true";
     }
 
-    public String editCurrentOrder(Order order) {
-        newOrder = false;
-        editOrder = order;
-        return "editOrder.xhtml?faces-redirect=true";
-    }
-
-    public String addNewOrder() {
-        newOrder = true;
-        editOrder = new Order();
-        return "editOrder.xhtml";
-    }
-
-    public String cancel() {
-
-        return "index.xhtml?faces-redirect=true";
+    public void initializeOrder() {
+        if (orderId == null) {
+            order = new Order();
+            return;
+        }
+        order = orderService.getOrderById(orderId);
     }
 
 }

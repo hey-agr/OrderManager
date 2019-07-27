@@ -14,30 +14,30 @@ public class OrderContent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     private BigDecimal price;
 
-    private Integer count;
+    private BigDecimal count;
 
     private BigDecimal sum;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
     public OrderContent() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,11 +49,11 @@ public class OrderContent implements Serializable {
         this.product = product;
     }
 
-    public Integer getCount() {
+    public BigDecimal getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(BigDecimal count) {
         this.count = count;
     }
 
@@ -88,22 +88,11 @@ public class OrderContent implements Serializable {
 
         OrderContent that = (OrderContent) o;
 
-        if (id != that.id) return false;
-        if (product != null ? !product.equals(that.product) : that.product != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (count != null ? !count.equals(that.count) : that.count != null) return false;
-        if (sum != null ? !sum.equals(that.sum) : that.sum != null) return false;
-        return order != null ? order.equals(that.order) : that.order == null;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (product != null ? product.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (count != null ? count.hashCode() : 0);
-        result = 31 * result + (sum != null ? sum.hashCode() : 0);
-        result = 31 * result + (order != null ? order.hashCode() : 0);
-        return result;
+        return id;
     }
 }

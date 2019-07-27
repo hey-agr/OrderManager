@@ -4,13 +4,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name = "PRODUCTS")
 @Table(name = "products")
+@NamedQueries({
+        @NamedQuery(name="allProducts", query="SELECT product FROM PRODUCTS product"),
+        @NamedQuery(name="productByID", query="SELECT product FROM PRODUCTS product WHERE id = :id")
+})
 public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
     private BigDecimal price;
@@ -26,11 +30,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,16 +53,11 @@ public class Product implements Serializable {
 
         Product product = (Product) o;
 
-        if (id != product.id) return false;
-        if (name != null ? !name.equals(product.name) : product.name != null) return false;
-        return price != null ? price.equals(product.price) : product.price == null;
+        return id == product.id;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        return result;
+        return id;
     }
 }
