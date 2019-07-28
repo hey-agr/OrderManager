@@ -21,23 +21,28 @@
         <h:form>
             <h:commandButton value="Add new order" action="#{orderController.addNewOrder()}" style="margin-right : 8px" />
 
-            <rich:extendedDataTable value="#{orderController.getOrders()}" id="table" var="item" filterVar="filterVal">
+            <rich:extendedDataTable value="#{orderController.getOrders()}" id="table" var="item">
 
                 <rich:column width="30px">
                     <f:facet name="header">Id</f:facet>
-                    <h:link value="#{item.id}" outcome="#{orderController.editCurrentOrder()}">
-                        <f:param name="orderId" value="#{item.id}"/>
-                    </h:link>
+                    #{item.id}
                 </rich:column>
 
                 <rich:column><f:facet name="header">Order №</f:facet>#{item.number}</rich:column>
 
-                <rich:column><f:facet name="header">Customer EMail</f:facet>#{item.customerEmail}</rich:column>
+                <rich:column width="150px"><f:facet name="header">Customer EMail</f:facet>#{item.customerEmail}</rich:column>
 
-                <rich:column><f:facet name="header">Order time</f:facet>#{item.orderTime}</rich:column>
+                <rich:column width="150px"><f:facet name="header">Order time</f:facet>#{orderController.getFormattedOrderDate(item.orderTime)}</rich:column>
 
-                <rich:column width="53px">
+                <rich:column width="80px">
+                    <f:facet name="header">Sum</f:facet>
+                    #{item.orderSum}
+                </rich:column>
+
+                <rich:column width="95px">
                     <f:facet name="header">Actions</f:facet>
+                    <h:commandButton value="edit" type="submit" action="#{orderController.editCurrentOrder(item)}" />
+                    <h:outputLabel value="  "/>
                     <h:commandButton value="delete" action="#{orderController.removeCurrentOrder(item.id)}" />
                 </rich:column>
 

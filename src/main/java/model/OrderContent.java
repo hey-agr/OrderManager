@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -20,8 +22,12 @@ public class OrderContent implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @NotNull(message = "Price should not be less than 0")
+    @Min(value = 0, message = "Price should not be less than 0")
     private BigDecimal price;
 
+    @NotNull(message = "Count should not be less than 0")
+    @Min(value = 0, message = "Count should not be less than 0")
     private BigDecimal count;
 
     private BigDecimal sum;

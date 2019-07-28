@@ -1,7 +1,11 @@
 package model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +21,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull(message = "Number cannot be empty")
     private Integer number;
 
     @Column(name="ordertime")
@@ -29,10 +34,14 @@ public class Order implements Serializable {
     }
 
     @Column(name="customeremail", length=255)
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
     private String customerEmail;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderContent> orderContents = new ArrayList<OrderContent>();
+
+    private BigDecimal orderSum;
 
     public Order() {
     }
@@ -77,9 +86,14 @@ public class Order implements Serializable {
         this.customerEmail = customerEmail;
     }
 
-//    public void addOrderContent(OrderContent orderContent) {
-//        this.orderContents.add(orderContent);
-//    }
+    public BigDecimal getOrderSum() {
+        return orderSum;
+    }
+
+    public void setOrderSum(BigDecimal orderSum) {
+        this.orderSum = orderSum;
+    }
+
 
     @Override
     public boolean equals(Object o) {

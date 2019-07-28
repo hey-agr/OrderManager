@@ -1,14 +1,15 @@
 package controller;
 
 import model.OrderContent;
-import model.Product;
 import service.OrderContentService;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +32,16 @@ public class OrderContentController implements Serializable {
     private Integer orderContentId;
     private List<OrderContent> currentOrderContent;
     private List<OrderContent> deletedOrderContent;
+    private boolean editing;
 
     public void beginConversation() {
         conversation.begin();
     }
 
     public void endConversation() {
-        conversation.end();
+        if (!isTransientConversation()) {
+            conversation.end();
+        }
     }
 
     public boolean isTransientConversation() {
@@ -46,7 +50,7 @@ public class OrderContentController implements Serializable {
 
     public OrderContent getOrderContent() {
         if (orderContent == null) {
-            initializeOrderContent();
+            orderContent = new OrderContent();
         }
         return orderContent;
     }
@@ -70,6 +74,15 @@ public class OrderContentController implements Serializable {
         this.orderContentId = orderContentId;
     }
 
+    public BigDecimal getOrderSum() {
+        BigDecimal sum = new BigDecimal(0);
+        for (OrderContent content :
+                currentOrderContent) {
+            sum = sum.add(content.getSum());
+        }
+        return sum;
+    }
+
     public void saveOrderContent() {
         //ADD, UPDATE ORDER CONTENT
         for (OrderContent content:currentOrderContent) {
@@ -89,8 +102,10 @@ public class OrderContentController implements Serializable {
     }
 
     public String addNewOrderContent() {
-        initializeOrderContent();
-        return "editOrderContent.xhtml?faces-redirect=true";
+        orderContent = new OrderContent();
+        editing = false;
+        productController.setSelectedProductID("");
+        return "editOrderContent.xhtml";
     }
 
     public void removeOrderContent(OrderContent orderContent) {
@@ -101,13 +116,30 @@ public class OrderContentController implements Serializable {
     public String addOrderContent() {
         orderContent.setOrder(orderController.getOrder());
         orderContent.setProduct(productController.getProduct());
-        currentOrderContent.add(orderContent);
+        if (!editing) {
+            currentOrderContent.add(orderContent);
+        } else {
+            editing = false;
+        }
+        orderContent = null;
+        orderContentId = null;
         return "editOrder.xhtml?faces-redirect=true";
     }
 
     public String cancelOrderContentEdit() {
         orderContent = null;
+        orderContentId = null;
         return "editOrder.xhtml?faces-redirect=true";
+    }
+
+    public String editCurrentOrderContent(OrderContent orderContent) {
+        orderContentId = orderContent.getId();
+        this.orderContent = orderContent;
+        if (orderContent.getProduct() != null) {
+            productController.setSelectedProductID(Integer.toString(orderContent.getProduct().getId()));
+        }
+        editing = true;
+        return "editOrderContent.xhtml";
     }
 
     public void refreshCurrentOrderContent() {
@@ -115,12 +147,22 @@ public class OrderContentController implements Serializable {
         deletedOrderContent = new ArrayList<>();
     }
 
-    public void initializeOrderContent() {
-        if (orderContentId == null) {
-            orderContent = new OrderContent();
-        } else {
-            orderContent = orderContentService.getOrderContentById(orderContentId);
-        }
+    private void calculateSum() {
+        BigDecimal currentCount = (orderContent.getCount() == null) ? new BigDecimal(0) : orderContent.getCount();
+        BigDecimal currentPrice = (orderContent.getPrice() == null) ? new BigDecimal(0) : orderContent.getPrice();
+        orderContent.setSum(currentCount.multiply(currentPrice));
     }
 
+    public void onChangeCount(AjaxBehaviorEvent event) {
+        calculateSum();
+    }
+
+    public void onChangePrice(AjaxBehaviorEvent event) {
+        calculateSum();
+    }
+
+    public void onChangeSelectedProduct(AjaxBehaviorEvent event) {
+        orderContent.setPrice(productController.getProduct().getPrice());
+        calculateSum();
+    }
 }

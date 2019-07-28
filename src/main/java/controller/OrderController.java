@@ -9,7 +9,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @ConversationScoped
@@ -62,7 +64,7 @@ public class OrderController implements Serializable{
     }
 
     public String addNewOrder() {
-        return "editOrder.xhtml?faces-redirect=true";
+        return "editOrder.xhtml";
     }
 
     public void removeCurrentOrder(Integer id) {
@@ -74,8 +76,10 @@ public class OrderController implements Serializable{
         orders = orderService.getListOfOrders();
     }
 
-    public String editCurrentOrder() {
-        return "editOrder.xhtml?faces-redirect=true";
+    public String editCurrentOrder(Order order) {
+        orderId = order.getId();
+        this.order = order;
+        return "editOrder.xhtml";
     }
 
     public String saveOrder() {
@@ -95,4 +99,15 @@ public class OrderController implements Serializable{
         order = orderService.getOrderById(orderId);
     }
 
+    public void setOrderSum(BigDecimal sum) {
+        order.setOrderSum(sum);
+    }
+
+    public String getFormattedOrderDate(Date orderDate) {
+        if (orderDate == null) {
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy.MM.dd");
+        return dateFormat.format(orderDate);
+    }
 }

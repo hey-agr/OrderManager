@@ -2,6 +2,7 @@ package controller;
 
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -19,41 +20,42 @@ public class ApplicationController implements Serializable {
     ProductController productController;
 
     public void preRenderViewEvent() {
-        if (orderController.isTransientConversation()){
+
+        if (!FacesContext.getCurrentInstance().isPostback()
+                && orderController.isTransientConversation()) {
             orderController.beginConversation();
         }
 
-        if (!orderContentController.isTransientConversation()){
-            orderContentController.endConversation();
-        }
-
-        if (!productController.isTransientConversation()){
-            productController.endConversation();
-        }
     }
 
     public void preRenderViewOrderEvent() {
-        if (orderContentController.isTransientConversation()) {
+        if (!FacesContext.getCurrentInstance().isPostback()
+                && orderContentController.isTransientConversation()) {
             orderContentController.beginConversation();
+        }
+
+        if (!FacesContext.getCurrentInstance().isPostback()
+                && productController.isTransientConversation()) {
+            productController.beginConversation();
         }
     }
 
     public void preRenderViewOrderContentEvent() {
-        if (!productController.isTransientConversation()) {
-            productController.endConversation();
-        }
-        productController.beginConversation();
 
-        productController.initializeProduct();
     }
 
     public String saveData() {
+        orderController.setOrderSum(orderContentController.getOrderSum());
         orderController.saveOrder();
         orderContentController.saveOrderContent();
+        orderContentController.endConversation();
+        productController.endConversation();
         return "index.xhtml?faces-redirect=true";
     }
 
     public String cancelDataEdit() {
+        orderContentController.endConversation();
+        productController.endConversation();
         return "index.xhtml?faces-redirect=true";
     }
 

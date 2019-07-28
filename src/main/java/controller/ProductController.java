@@ -30,7 +30,9 @@ public class ProductController implements Serializable {
     }
 
     public void endConversation() {
-        conversation.end();
+        if (!isTransientConversation()) {
+            conversation.end();
+        }
     }
 
     public boolean isTransientConversation() {
@@ -50,6 +52,7 @@ public class ProductController implements Serializable {
 
     public void setSelectedProductID(String selectedProductID) {
         this.selectedProductID = selectedProductID;
+        product = null;
         if (!selectedProductID.isEmpty()) {
             Integer product_id = Integer.parseInt(selectedProductID);
             product = productService.getProductByID(product_id);

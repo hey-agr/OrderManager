@@ -3,7 +3,6 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:rich="http://richfaces.org/rich">
 <h:head>
@@ -14,8 +13,9 @@
         <f:viewParam name="orderContentId" value="#{orderContentController.orderContentId}"/>
         <f:event type="preRenderView" listener="#{applicationController.preRenderViewOrderContentEvent()}"/>
     </f:metadata>
-    <h:form>
-        <h:panelGrid columns="2">
+
+    <h:form id="orderContentForm">
+        <h:panelGrid columns="3">
             <h:outputLabel value="Product: " />
             <rich:inplaceSelect id="product" value = "#{productController.selectedProductID}" defaultLabel = "Select product" validatorMessage="Please select product">
                 <f:validateRequired/>
@@ -23,22 +23,35 @@
                                var="item"
                                itemValue="#{item.id}"
                                itemLabel="#{item.name}"/>
-                <f:ajax render="dropdown" />
+                <f:ajax listener="#{orderContentController.onChangeSelectedProduct}"
+                        render="orderContentForm"/>
             </rich:inplaceSelect>
+            <rich:message for="product" />
+
             <h:outputLabel value="Count: " />
-            <h:inputText id="c_count" value="#{orderContentController.orderContent.count}" />
+            <h:inputText id="c_count" value="#{orderContentController.orderContent.count}">
+                <f:ajax event="change" listener="#{orderContentController.onChangeCount}" render="orderContentForm"/>
+            </h:inputText>
+            <rich:message for="c_count" />
+
             <h:outputLabel value="Price: " />
-            <h:inputText id="c_price" value="#{orderContentController.orderContent.price}" />
-            <h:outputLabel value="Sum: " />
-            <h:inputText id="c_sum" value="#{orderContentController.orderContent.sum}" />
+            <h:inputText id="c_price" value="#{orderContentController.orderContent.price}">
+                <f:ajax event="change" listener="#{orderContentController.onChangePrice}" render="orderContentForm"/>
+            </h:inputText>
+            <rich:message for="c_price" />
+
+            <h:outputLabel value="Sum: " title="titleSum"/>
+            <h:outputLabel value="#{orderContentController.orderContent.sum}" />
         </h:panelGrid>
 
-        <h:commandButton value="Add"
-                         action="#{orderContentController.addOrderContent()}" />
-        <h:commandButton value="Cancel"
-                         action="#{orderContentController.cancelOrderContentEdit}"/>
-
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:commandButton value="Add"
+                             action="#{orderContentController.addOrderContent()}" />
+            <h:commandButton value="Cancel"
+                             action="#{orderContentController.cancelOrderContentEdit}"/>
+        </h:panelGrid>
 
     </h:form>
+
 </h:body>
 </html>
