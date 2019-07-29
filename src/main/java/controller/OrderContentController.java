@@ -13,6 +13,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Контроллер "Состав заказа", существует в течении диалоги,
+ * управляется главным контроллером "ApplicationController",
+ * реализует бизнес логику операций с составаом заказа,
+ * использует сервисный слой "orderContentService", зависит от "OrderController", управляет "ProductController"
+ *
+ * @author Rabadanov A.G.
+ */
 @ConversationScoped
 @Named
 public class OrderContentController implements Serializable {

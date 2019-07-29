@@ -14,6 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Контроллер "Заказ", существует в течении диалоги,
+ * управляется главным контроллером "ApplicationController",
+ * реализует бизнес логику операций с заказом,
+ * использует сервисный слой "orderService"
+ *
+ * @author Rabadanov A.G.
+ */
 @ConversationScoped
 @Named
 public class OrderController implements Serializable{

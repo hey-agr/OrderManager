@@ -7,9 +7,17 @@ import model.OrderContent;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jws.WebService;
 import java.io.Serializable;
 import java.util.List;
 
+
+/**
+* Реализует сервисный уровень управления составом заказов (сущность OrderContent),
+* Использует уровень доступа к данными OrderContentDAO.
+*
+* @author Rabadanov A.G.
+*/
 @Stateless
 public class OrderContentServiceImpl implements OrderContentService, Serializable {
 
@@ -17,7 +25,7 @@ public class OrderContentServiceImpl implements OrderContentService, Serializabl
     private OrderContentDAO orderContentDAO;
 
     public void addOrderContent(OrderContent orderContent) {
-        orderContentDAO.addOrderСontent(orderContent);
+        orderContentDAO.addOrderContent(orderContent);
     }
 
     public void updateOrderContent(OrderContent orderContent) {

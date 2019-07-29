@@ -6,7 +6,7 @@ import model.OrderContent;
 import java.util.List;
 
 public interface OrderContentDAO {
-    void addOrderСontent(OrderContent orderContent);
+    void addOrderContent(OrderContent orderContent);
     void updateOrderContent(OrderContent orderContent);
     void removeOrderContent(Integer id);
     OrderContent getOrderContentById(Integer id);

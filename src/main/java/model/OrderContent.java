@@ -3,10 +3,19 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-
+/**
+ * Сущность "Состав заказа" (entity OrderContent)
+ * предназначена для сохрания данных в таблицу БД "ordercontent",
+ * представляет собой единицу состава заказа,
+ * хранит в себе данные по продукции, цене, количеству и сумме,
+ * имеет связь многие к одному с сущностью "Заказ" (entity Order) и связь многие к одному c сущностью "Прайс-лист" (entity Product).
+ *
+ * @author Rabadanov A.G.
+ */
 @Entity(name = "ORDERSCONTENT")
 @Table(name = "ordercontent")
 @NamedQueries({

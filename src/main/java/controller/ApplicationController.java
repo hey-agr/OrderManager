@@ -7,6 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
+
+/**
+ * Главный контроллер приложения, существует в течении сессии,
+ * упрвляет жизненным циклом контроллеров "OrderController", "OrderContentController", "ProductController".
+ *
+ * @author Rabadanov A.G.
+ */
 @SessionScoped
 @Named
 public class ApplicationController implements Serializable {

@@ -10,6 +10,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Сущность "Заказ" (entity Order)
+ * предназначена для сохрания данных в таблицу БД "orders",
+ * представляет собой единицу заказа клиента,
+ * хранит в себе номер заказа, е-майл адрес, время создания заказа,
+ * имеет связь 1 ко многим с сущностью "Состав заказа" (entity OrderContent).
+ *
+ * @author Rabadanov A.G.
+ */
 @Entity(name = "ORDERS")
 @Table(name = "orders")
 @NamedQueries({

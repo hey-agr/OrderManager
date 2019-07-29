@@ -9,17 +9,22 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Реализует CRUD операции работы с базой данных сущности "Состав заказа" (entity OrderContent)
+ * Использует контекст базы данных "myUnit"
+ *
+ * @author Rabadanov A.G.
+ */
 @Stateless
 public class OrderContentDAOImpl implements OrderContentDAO {
 
     @PersistenceContext(name = "myUnit")
     private EntityManager em;
 
-    public void addOrderСontent(OrderContent orderContent) {
+    public void addOrderContent(OrderContent orderContent) {
         em.persist(orderContent);
     }
 

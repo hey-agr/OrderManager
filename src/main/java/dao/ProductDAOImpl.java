@@ -8,6 +8,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Реализует CRUD операции работы с базой данных сущности "Прайс-лист" (entity Product)
+ * Использует контекст базы данных "myUnit"
+ *
+ * @author Rabadanov A.G.
+ */
 @Stateless
 public class ProductDAOImpl implements ProductDAO {
 

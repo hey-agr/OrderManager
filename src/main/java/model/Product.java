@@ -1,9 +1,19 @@
 package model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Сущность "Прайс-лист" (entity Product)
+ * предназначена для сохрания данных в таблицу БД "products",
+ * представляет собой единицу прайс-листа,
+ * хранит в себе название товара, стоимость,
+ * имеет связь многие к одному с сущностью "Состав заказа" (entity OrderContent).
+ *
+ * @author Rabadanov A.G.
+ */
 @Entity(name = "PRODUCTS")
 @Table(name = "products")
 @NamedQueries({

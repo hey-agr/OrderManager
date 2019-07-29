@@ -2,6 +2,7 @@ package service;
 
 import model.Order;
 
+import javax.jws.WebService;
 import java.util.List;
 
 public interface OrderService {

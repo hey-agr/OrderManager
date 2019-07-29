@@ -3,7 +3,9 @@ package service;
 import model.Order;
 import model.OrderContent;
 
+import javax.jws.WebService;
 import java.util.List;
+
 
 public interface OrderContentService {
     void addOrderContent(OrderContent orderContent);

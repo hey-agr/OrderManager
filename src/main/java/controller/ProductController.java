@@ -5,12 +5,19 @@ import service.ProductService;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Контроллер "Прайс-лист", существует в течении диалоги,
+ * управляется главным контроллером "ApplicationController",
+ * реализует бизнес логику операций с продукцией прайс-листа,
+ * использует сервисный слой "ProductService", зависит от "OrderContentController"
+ *
+ * @author Rabadanov A.G.
+ */
 @ConversationScoped
 @Named
 public class ProductController implements Serializable {

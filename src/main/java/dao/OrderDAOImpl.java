@@ -3,14 +3,17 @@ package dao;
 import model.Order;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Реализует CRUD операции работы с базой данных сущности "Заказ" (entity Order)
+ * Использует контекст базы данных "myUnit"
+ *
+ * @author Rabadanov A.G.
+ */
 @Stateless
 public class OrderDAOImpl implements OrderDAO {
 
