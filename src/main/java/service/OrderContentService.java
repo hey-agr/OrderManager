@@ -12,6 +12,6 @@ public interface OrderContentService {
     void updateOrderContent(OrderContent orderContent);
     void removeOrderContent(Integer id);
     OrderContent getOrderContentById(Integer id);
-    List<OrderContent> getOrdersContent();
+    List<OrderContent> getListOfOrdersContent();
     List<OrderContent> getOrdersContentByOrder(Order order);
 }

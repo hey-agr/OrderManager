@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -16,6 +16,8 @@ import java.math.BigDecimal;
  *
  * @author Rabadanov A.G.
  */
+@XmlRootElement(name="ordercontent")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity(name = "ORDERSCONTENT")
 @Table(name = "ordercontent")
 @NamedQueries({
@@ -25,24 +27,30 @@ public class OrderContent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(required = true)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @XmlElement(required = true)
     private Product product;
 
     @NotNull(message = "Price should not be less than 0")
     @Min(value = 0, message = "Price should not be less than 0")
+    @XmlElement(required = true)
     private BigDecimal price;
 
     @NotNull(message = "Count should not be less than 0")
     @Min(value = 0, message = "Count should not be less than 0")
+    @XmlElement(required = true)
     private BigDecimal count;
 
+    @XmlElement(required = true)
     private BigDecimal sum;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @XmlTransient
     private Order order;
 
     public OrderContent() {
@@ -103,7 +111,7 @@ public class OrderContent implements Serializable {
 
         OrderContent that = (OrderContent) o;
 
-        return id == that.id;
+        return id.equals(that.id);
     }
 
     @Override

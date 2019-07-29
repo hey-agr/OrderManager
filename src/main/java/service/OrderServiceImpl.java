@@ -5,8 +5,6 @@ import model.Order;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import java.util.List;
  *
  * @author Rabadanov A.G.
  */
-@Path(value="/orders")
 @Stateless
 public class OrderServiceImpl implements OrderService, Serializable {
 
@@ -39,8 +36,6 @@ public class OrderServiceImpl implements OrderService, Serializable {
         return orderDao.getOrderById(id);
     }
 
-    @GET
-    @Path(value="/list")
     public List<Order> getListOfOrders() {
         return orderDao.getListOfOrders();
     }

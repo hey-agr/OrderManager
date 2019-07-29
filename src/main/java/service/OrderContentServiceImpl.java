@@ -40,7 +40,7 @@ public class OrderContentServiceImpl implements OrderContentService, Serializabl
         return orderContentDAO.getOrderContentById(id);
     }
 
-    public List<OrderContent> getOrdersContent() {
+    public List<OrderContent> getListOfOrdersContent() {
         return orderContentDAO.getOrdersContent();
     }
 

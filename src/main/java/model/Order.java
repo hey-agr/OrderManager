@@ -4,6 +4,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,6 +23,8 @@ import java.util.List;
  *
  * @author Rabadanov A.G.
  */
+@XmlRootElement(name="order")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity(name = "ORDERS")
 @Table(name = "orders")
 @NamedQueries({
@@ -28,13 +34,16 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(required=true)
     private Integer id;
 
     @NotNull(message = "Number cannot be empty")
+    @XmlElement(required=true)
     private Integer number;
 
     @Column(name="ordertime")
     @Temporal(TemporalType.TIMESTAMP)
+    @XmlElement(required=true)
     private Date orderTime;
 
     @PrePersist
@@ -42,14 +51,17 @@ public class Order implements Serializable {
         orderTime = new Date();
     }
 
-    @Column(name="customeremail", length=255)
+    @Column(name="customeremail")
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
+    @XmlElement(required=true)
     private String customerEmail;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderContent> orderContents = new ArrayList<OrderContent>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @XmlElement(required=true)
+    private List<OrderContent> orderContents = new ArrayList<>();
 
+    @XmlElement(required=true)
     private BigDecimal orderSum;
 
     public Order() {

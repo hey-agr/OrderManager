@@ -1,4 +1,4 @@
 # Игнор-лист файлов проекта
-/.idea/*
-/target/*
+.idea/*
+target/*
 OrderManager.iml
