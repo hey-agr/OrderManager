@@ -29,8 +29,8 @@
         </h:panelGrid>
 
         <h:commandButton value="Add order content" action="#{orderContentController.addNewOrderContent()}" style="margin-right : 8px" />
-        <rich:extendedDataTable value="#{orderContentController.getCurrentOrderContent()}" id="table" var="item">
-            <rich:column width="150px"><f:facet name="header">Product</f:facet>#{item.product}</rich:column>
+        <rich:extendedDataTable value="#{orderContentController.getCurrentOrderContent()}" id="table" var="item" sortMode="single">
+            <rich:column width="150px" sortBy="#{item.product.name}"><f:facet name="header">Product</f:facet>#{item.product}</rich:column>
             <rich:column width="150px"><f:facet name="header">Count</f:facet>#{item.count}</rich:column>
             <rich:column width="150px"><f:facet name="header">Price</f:facet>#{item.price}</rich:column>
             <rich:column width="150px"><f:facet name="header">Sum</f:facet>#{item.sum}</rich:column>

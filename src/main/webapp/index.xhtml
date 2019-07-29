@@ -6,8 +6,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-      xmlns:a4j="http://richfaces.org/a4j"
       xml:lang="en" lang="en">
 <h:head>
     <title>Order manager</title>
@@ -21,14 +19,14 @@
         <h:form>
             <h:commandButton value="Add new order" action="#{orderController.addNewOrder()}" style="margin-right : 8px" />
 
-            <rich:extendedDataTable value="#{orderController.getOrders()}" id="table" var="item">
+            <rich:extendedDataTable value="#{orderController.getOrders()}" id="table" var="item" sortMode="single">
 
-                <rich:column width="30px">
+                <rich:column width="60px" sortBy="#{item.id}">
                     <f:facet name="header">Id</f:facet>
                     #{item.id}
                 </rich:column>
 
-                <rich:column><f:facet name="header">Order №</f:facet>#{item.number}</rich:column>
+                <rich:column width="100px" sortBy="#{item.number}"><f:facet name="header">Order №</f:facet>#{item.number}</rich:column>
 
                 <rich:column width="150px"><f:facet name="header">Customer EMail</f:facet>#{item.customerEmail}</rich:column>
 

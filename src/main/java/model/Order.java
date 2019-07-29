@@ -61,6 +61,7 @@ public class Order implements Serializable {
     @XmlElement(required=true)
     private List<OrderContent> orderContents = new ArrayList<>();
 
+    @Column(name="ordersum")
     @XmlElement(required=true)
     private BigDecimal orderSum;
 

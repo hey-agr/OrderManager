@@ -13,6 +13,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * Ресурс сервиса "Прайс-лист" (Product)
+ * реализует функционал API по взаимодействию с сущностью "Прайс-лист" (Product)
+ * использует сервисный слой доступа к базе данных ProductService
+ *
+ * @author Rabadanov A.G.
+ */
 @RequestScoped
 @Path("product")
 public class ProductResource {

@@ -14,6 +14,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * Ресурс сервиса "Состав заказа" (OrderContent)
+ * реализует функционал API по взаимодействию с сущностью "Состав заказа" (OrderContent)
+ * использует сервисный слой доступа к базе данных OrderContentService
+ *
+ * @author Rabadanov A.G.
+ */
 @RequestScoped
 @Path("ordercontent")
 public class OrderContentResource {
