@@ -21,7 +21,7 @@ import java.util.List;
 @Stateless
 public class OrderContentDAOImpl implements OrderContentDAO {
 
-    @PersistenceContext(name = "myUnit")
+    @PersistenceContext(unitName = "myUnit")
     private EntityManager em;
 
     public void addOrderContent(OrderContent orderContent) {

@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless
 public class ProductDAOImpl implements ProductDAO {
 
-    @PersistenceContext(name = "myUnit")
+    @PersistenceContext(unitName = "myUnit")
     private EntityManager em;
 
     public List<Product> getListOfProducts() {
@@ -30,5 +30,23 @@ public class ProductDAOImpl implements ProductDAO {
         TypedQuery<Product> result = em.createNamedQuery("productByID", Product.class);
         result.setParameter("id",id);
         return result.getSingleResult();
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        em.persist(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        em.merge(product);
+        em.flush();
+    }
+
+    @Override
+    public void removeProduct(Integer id) {
+        Product product = getProductByID(id);
+        if (product != null)
+            em.remove(product);
     }
 }
