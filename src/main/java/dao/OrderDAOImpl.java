@@ -31,14 +31,13 @@ public class OrderDAOImpl implements OrderDAO {
     public void removeOrder(Integer id) {
         Order order = getOrderById(id);
 
-        if (order!=null) {
+        if (order != null) {
             em.remove(order);
         }
     }
 
     public Order getOrderById(Integer id) {
-        Order order = (Order) em.find(Order.class, new Integer(id));
-        return order;
+        return em.find(Order.class, id);
     }
 
     public List<Order> getListOfOrders() {
